@@ -4,3 +4,6 @@ CVS
 ._*
 *~
 .*.swp
+.rbenv-version
+Books
+GeoIPCity.version

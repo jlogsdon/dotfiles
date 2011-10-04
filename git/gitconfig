@@ -2,8 +2,8 @@
     excludesfile = ~/.gitignore
     autocrlf = input
 [user]
-    email = dwarf@girsbrain.org
-    name = James Logsdon
+	email = dwarf@girsbrain.org
+	name = James Logsdon
 [color]
     ui = auto
     interactive = auto
@@ -26,6 +26,3 @@
     pu = !git fetch upstream && git merge upstream/master
     empty-branch = !sh -c 'git symbolic-ref HEAD refs/heads/$1 && rm .git/index && git clean -fdx' -
     drb = !sh -c 'git push origin :$0'
-[github]
-    user = jlogsdon
-    token = 67db8824e87cd0f95b21136b842f98c9

@@ -25,8 +25,7 @@ PREFIX=${PREFIX%/}
 function link() {
     DST=${PREFIX}/$2
     SRC=${SCRIPT_DIR}/$1
-    [ -h $DST ] && rm -f $DST
-    ln -s $SRC $DST
+    ln -snf $SRC $DST
 }
 
 link vim/vimrc .vimrc
@@ -37,3 +36,17 @@ link zsh/zshrc .zshrc
 
 link git/gitconfig .gitconfig
 link git/gitignore .gitignore
+
+link tmux.conf .tmux.conf
+
+# Handle scripts
+if [[ `uname` == "Darwin" ]]; then
+    BIN_PATH=Scripts
+else
+    BIN_PATH=bin
+fi
+
+[ -d $PREFIX/$BIN_PATH ] || mkdir $PREFIX/$BIN_PATH
+for SCRIPT in `ls $SCRIPT_DIR/bin`; do
+    link bin/$SCRIPT $BIN_PATH/$SCRIPT
+done

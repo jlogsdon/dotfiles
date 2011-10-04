@@ -10,6 +10,7 @@
 " }
 
 " Basics {
+    set enc=utf-8
     set nocompatible " explicitly get out of vi-compatible mode
     set exrc " don't use local version of .(g)vimrc, .exrc
     set background=dark " we plan to use a dark background
@@ -37,7 +38,7 @@
     set rtp+=~/.vim/vundle/
     call vundle#rc()
 
-    Bundle 'git://git.wincent.com/command-t.git'
+    Bundle 'kien/ctrlp.vim'
     Bundle 'Raimondi/delimitMate'
     Bundle 'docunext/closetag.vim'
     Bundle 'scrooloose/nerdcommenter'
@@ -50,6 +51,11 @@
     Bundle 'tpope/vim-rails'
     Bundle 'tpope/vim-markdown'
     Bundle 'robbevan/Vagrantfile.vim'
+    Bundle 'Lokaltog/vim-powerline'
+    Bundle 'bbommarito/vim-slim'
+    Bundle 'kchmck/vim-coffee-script'
+    Bundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
+    Bundle 'groenewege/vim-less'
 
     filetype plugin indent on " load filetype plugins/indent settings
 " }
@@ -85,11 +91,8 @@
     set wildmode=list:longest " turn on wild mode huge list
 " }
 
-" Closetag {
-    let 
-" }
-
 " Vim UI {
+    colorscheme Tomorrow-Night
     set cursorcolumn " highlight the current column
     set cursorline " highlight current line
     set incsearch " BUT do highlight as you type you
@@ -131,6 +134,7 @@
     "              | | +-- readonly flag in square brackets
     "              | +-- rodified flag in square brackets
     "              +-- full path to file in the buffer
+    set wmh=0 " Set the minimum window height to 0 (hides split panes)
 " }
 
 " Text Formatting/Layout {
@@ -143,9 +147,9 @@
     set nowrap " do not wrap line
     set shiftround " when at 3 spaces, and I hit > ... go to 4, not 5
     set smartcase " if there are caps, go case-sensitive
-    set shiftwidth=4 " auto-indent amount when using cindent,
+    set shiftwidth=2 " auto-indent amount when using cindent,
                       " >>, << and stuff like that
-    set softtabstop=4 " when hitting tab or backspace, how many spaces
+    set softtabstop=2 " when hitting tab or backspace, how many spaces
                        "should a tab be (see expandtab)
     set tabstop=8 " real tabs should be 8, and they will show with
                    " set list on
@@ -200,6 +204,10 @@
             let tlist_vb_settings = 'asp;f:function;c:class' 
         " }
     " }
+
+    " PowerLine Settings {
+      let g:Powerline_symbols = 'unicode'
+    " }
 " }
 
 " Mappings {
@@ -210,46 +218,24 @@
     noremap <S-space> <C-b>
     noremap <space> <C-f>
     noremap <C-u> :GundoToggle<CR>
-" }
 
-" Autocommands {
-    " Ruby {
-        " ruby standard 2 spaces, always
-        au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2 
-        au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2 
-    " }
-    " HTML {
-        " ruby standard 2 spaces, always
-        au BufRead,BufNewFile *.html set shiftwidth=2
-        au BufRead,BufNewFile *.html set softtabstop=2
-    " }
-    " Notes {
-        " I consider .notes files special, and handle them differently, I
-        " should probably put this in another file
-        au BufRead,BufNewFile *.notes set foldlevel=2
-        au BufRead,BufNewFile *.notes set foldmethod=indent
-        au BufRead,BufNewFile *.notes set foldtext=foldtext()
-        au BufRead,BufNewFile *.notes set listchars=tab:\ \
-        au BufRead,BufNewFile *.notes set noexpandtab
-        au BufRead,BufNewFile *.notes set shiftwidth=8
-        au BufRead,BufNewFile *.notes set softtabstop=8
-        au BufRead,BufNewFile *.notes set tabstop=8
-        au BufRead,BufNewFile *.notes set syntax=notes
-        au BufRead,BufNewFile *.notes set nocursorcolumn
-        au BufRead,BufNewFile *.notes set nocursorline
-        au BufRead,BufNewFile *.notes set guifont=Consolas:h12
-        au BufRead,BufNewFile *.notes set spell
-    " }
+    " Split pane movement and management
+    nmap <silent> <A-Up> :wincmd k<CR>
+    nmap <silent> <A-Down> :wincmd j<CR>
+    nmap <silent> <A-Left> :wincmd h<CR>
+    nmap <silent> <A-Right> :wincmd l<CR>
+    map <C-J> <C-W>j<C-W>_
+    map <C-K> <C-W>k<C-W>_
 " }
 
 " GUI Settings {
 if has("gui_running")
     " Basics {
-        colorscheme solarized " my color scheme (only works in GUI)
+        colorscheme Tomorrow-Night-Bright " Looks better than the normal in GUI mode
         set transparency=20
         set columns=180 " perfect size for me
-        set guifont=Consolas:h10 " My favorite font
-        set guioptions=ce 
+        set guifont=Consolas:h14 " My favorite font
+        set guioptions=ce
         "              ||
         "              |+-- use simple dialogs rather than pop-ups
         "              +  use GUI tabs, not console style tabs
