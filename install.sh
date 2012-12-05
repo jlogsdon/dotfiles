@@ -23,22 +23,24 @@ done
 PREFIX=${PREFIX%/}
 
 function link() {
-    DST=${PREFIX}/$2
+    [ -z $2 ] && DST=.$1 || DST=$2
+    DST=${PREFIX}/$DST
     SRC=${SCRIPT_DIR}/$1
     ln -snf $SRC $DST
 }
 
 link vim/vimrc .vimrc
-link vim .vim
+link vim
 
 link vendor/oh-my-zsh .oh-my-zsh
 link zsh/zshrc .zshrc
-link zsh .zsh
+link zsh
 
 link git/gitconfig .gitconfig
 link git/gitignore .gitignore
 
-link tmux.conf .tmux.conf
+link tmux.conf
+link osx
 
 # Handle scripts
 if [[ `uname` == "Darwin" ]]; then
