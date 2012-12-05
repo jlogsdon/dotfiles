@@ -33,6 +33,7 @@ link vim .vim
 
 link vendor/oh-my-zsh .oh-my-zsh
 link zsh/zshrc .zshrc
+link zsh .zsh
 
 link git/gitconfig .gitconfig
 link git/gitignore .gitignore
