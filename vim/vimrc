@@ -38,6 +38,7 @@
     set rtp+=~/.vim/vundle/
     call vundle#rc()
 
+    Bundle 'tpope/vim-fugitive'
     Bundle 'kien/ctrlp.vim'
     Bundle 'Raimondi/delimitMate'
     Bundle 'docunext/closetag.vim'
@@ -205,10 +206,7 @@
             let tlist_vb_settings = 'asp;f:function;c:class' 
         " }
     " }
-
-    " PowerLine Settings {
-      let g:Powerline_symbols = 'unicode'
-    " }
+    let g:Powerline_symbols = 'fancy'
 " }
 
 " Mappings {

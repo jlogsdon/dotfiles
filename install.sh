@@ -29,10 +29,13 @@ function link() {
     ln -snf $SRC $DST
 }
 
+link vendor/oh-my-zsh .oh-my-zsh
+link vendor/tmux-powerline .tmux-powerline
+link vendor/base16-shell .base16-shell
+
 link vim/vimrc .vimrc
 link vim
 
-link vendor/oh-my-zsh .oh-my-zsh
 link zsh/zshrc .zshrc
 link zsh
 

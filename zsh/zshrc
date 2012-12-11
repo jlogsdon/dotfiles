@@ -13,7 +13,7 @@ fi
 
 alias ll='ls -lh'
 alias la='ls -a'
-alias tmux="TERM=screen-256color-bce tmux"
+alias tmux="TERM=screen-256color-bce tmux -u"
 
 # Don't correct filenames with these commands
 alias cp='nocorrect cp'
@@ -54,6 +54,7 @@ ZSH_CUSTOM=$HOME/.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 plugins=(history-substring-search zsh-syntax-highlighting vi-mode)
 source $ZSH/oh-my-zsh.sh
+source $HOME/.base16-shell/base16-tomorrow.dark.sh
 
 ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
 ZSH_HIGHLIGHT_PATTERNS+=('sudo ' 'fg=white,bold,bg=red')
@@ -71,6 +72,8 @@ if [ -f $HOME/.local ]; then
     source $HOME/.local
 fi
 
+PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
+
 # Autojump
 export AUTOJUMP_DATA_DIR=$HOME/.local/share/autojump
 
@@ -83,3 +86,4 @@ preexec_functions+=autojump_preexec
 
 alias jumpstat="autojump --stat"
 function j { local new_path="$(autojump $@)";if [ -n "$new_path" ]; then echo -e "\\033[31m${new_path}\\033[0m"; cd "$new_path";else false; fi }
+
