@@ -46,6 +46,7 @@ link tmux/tmux.conf .tmux.conf
 link tmux
 
 link osx
+link inputrc
 
 # Handle scripts
 if [[ `uname` == "Darwin" ]]; then
