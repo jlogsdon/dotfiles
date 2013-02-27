@@ -3,12 +3,24 @@ export ZSH_THEME="dieter-bright"
 export DISABLE_AUTO_UPDATE="true"
 export LC_ALL="C"
 export LANG="en_US.UTF-8"
-export EDITOR="/usr/local/bin/vim"
+
+if [ -f /usr/local/bin/vim ]; then
+  export EDITOR="/usr/local/bin/vim"
+else
+  export EDITOR="/usr/bin/vim"
+fi
 
 if [ `uname` = "Darwin" ]; then
     alias ls='ls -G'
 else
     alias ls='ls --color'
+fi
+
+if [ `which apt-get` != "" ]; then
+    alias ai='sudo apt-get install'
+    alias as='aptitude search'
+    alias au='sudo apt-get update'
+    alias ar='sudo apt-add-repository'
 fi
 
 alias ll='ls -lh'
