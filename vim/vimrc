@@ -53,7 +53,6 @@
     Bundle 'tpope/vim-markdown'
     Bundle 'robbevan/Vagrantfile.vim'
     Bundle 'Lokaltog/vim-powerline'
-    Bundle 'bbommarito/vim-slim'
     Bundle 'kchmck/vim-coffee-script'
     Bundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
     Bundle 'groenewege/vim-less'
