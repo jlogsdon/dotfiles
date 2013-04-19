@@ -8,8 +8,8 @@
     st = status
     ci = commit
     co = checkout
-    staged = "diff --cached"
-    oneline = "log --pretty=oneline"
+    staged = diff --cached
+    oneline = log --pretty=oneline
     llog = log --date=local
     changes = diff --name-status -r
     unadd = update-index --force-remove
@@ -29,4 +29,5 @@
     default = rebase
 [include]
     path = ~/.gitconfig.local
-
+[hub]
+    protocol = https
