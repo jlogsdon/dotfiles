@@ -64,12 +64,16 @@ export PATH
 
 ZSH_CUSTOM=$HOME/.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
-plugins=(history-substring-search zsh-syntax-highlighting vi-mode)
+plugins=(zsh-syntax-highlighting history-substring-search vi-mode)
 source $ZSH/oh-my-zsh.sh
-source $HOME/.base16-shell/base16-tomorrow.dark.sh
 
 ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
 ZSH_HIGHLIGHT_PATTERNS+=('sudo ' 'fg=white,bold,bg=red')
+
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+bindkey "^[[A" history-substring-search-up
+bindkey "^[[B" history-substring-search-down
 
 if [ -f $HOME/.zsh_aliases ]; then
     source $HOME/.zsh_aliases
@@ -86,16 +90,5 @@ fi
 
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 
-# Autojump
-export AUTOJUMP_DATA_DIR=$HOME/.local/share/autojump
-
-function autojump_preexec() {
-    { (autojump -a "$(pwd -P)"&)>/dev/null 2>>|${AUTOJUMP_DATA_DIR}/.autojump_errors ; } 2>/dev/null
-}
-
-typeset -ga preexec_functions
-preexec_functions+=autojump_preexec
-
-alias jumpstat="autojump --stat"
-function j { local new_path="$(autojump $@)";if [ -n "$new_path" ]; then echo -e "\\033[31m${new_path}\\033[0m"; cd "$new_path";else false; fi }
+source `brew --prefix`/etc/profile.d/z.sh
 
