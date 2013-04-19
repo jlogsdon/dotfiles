@@ -1,3 +1,8 @@
+#!/bin/bash
+
+# Go ahead and get sudo powers
+sudo -v
+
 # Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
@@ -15,4 +20,13 @@ defaults write com.apple.Safari IncludeDebugMenu -bool true
 
 # Show the ~/Library folder
 chflags nohidden ~/Library
+
+# Disable save to iCloud default
+defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+
+# Disable resume system-wide
+defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool false
+
+# Disable auto-correct
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
