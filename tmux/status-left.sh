@@ -45,7 +45,7 @@ lan_ip+=(["script"]="${segments_path}/lan_ip.sh")
 lan_ip+=(["foreground"]="colour255")
 lan_ip+=(["background"]="colour24")
 lan_ip+=(["separator"]="${separator_right_bold}")
-register_segment "lan_ip"
+#register_segment "lan_ip"
 
 declare -A wan_ip
 wan_ip+=(["script"]="${segments_path}/wan_ip.sh")
@@ -53,7 +53,7 @@ wan_ip+=(["foreground"]="colour255")
 wan_ip+=(["background"]="colour24")
 wan_ip+=(["separator"]="${separator_right_thin}")
 wan_ip+=(["separator_fg"]="white")
-register_segment "wan_ip"
+#register_segment "wan_ip"
 
 # Print the status line in the order of registration above.
 print_status_line_left
