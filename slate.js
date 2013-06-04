@@ -1,156 +1,198 @@
+var monitor, ops, screen, op, hashes, layouts, universalLayout;
+
 S.cfga({
-  'defaultToCurrentScreen': true,
-  'checkDefaultsOnLoad':    true
+  defaultToCurrentScreen: true,
+  checkDefaultsOnLoad:    true
 });
 
 // Monitors
-var monitor = {
-  lap: '1680x1050',
-  tb:  '2560x1440'
+monitor = {
+  laptop:  '1680x1050',
+  tbMid:   1,
+  tbRight: 2
 };
 
 // Operations
-var ops = {lap: {}, tb: {}};
+ops = {laptop: {}, tbMid: {}, tbRight: {}};
 
-ops.lap.chat = S.op('corner', {
-  screen: monitor.lap,
+ops.laptop.sliver = S.op('corner', {
+  screen: monitor.laptop,
   direction: 'top-left',
   width: 'screenSizeX/9',
   height: 'screenSizeY'
 });
-ops.lap.main = ops.lap.chat.dup({direction: 'top-right', width: '8*screenSizeX/9'});
-ops.lap.full = S.op('move', {
-  screen: monitor.lap,
+ops.laptop.main = ops.laptop.sliver.dup({direction: 'top-right', width: '8*screenSizeX/9'});
+ops.laptop.full = S.op('move', {
+  screen: monitor.laptop,
   x: 'screenOriginX',
   y: 'screenOriginY',
   width: 'screenSizeX',
   height: 'screenSizeY'
 });
 
-ops.tb.full = S.op('move', {
-  screen: monitor.tb,
-  x: 'screenOriginX',
-  y: 'screenOriginY',
-  width: 'screenSizeX',
-  height: 'screenSizeY'
-});
-ops.tb.top = ops.tb.full.dup({height: 'screenSizeY/2'});
-ops.tb.topLeft = ops.tb.top.dup({width: 'screenSizeX/2'});
-ops.tb.topRight = ops.tb.topLeft.dup({x: 'screenOriginX+screenSizeX/2'});
-ops.tb.bottom = ops.tb.top.dup({y: 'screenOriginY+screenSizeY/2'});
-ops.tb.bottomLeft = ops.tb.bottom.dup({width: 'screenSizeX/2'});
-ops.tb.bottomMid = ops.tb.bottomLeft.dup({x: 'screenOriginX+screenSizeX/3'});
-ops.tb.bottomRight = ops.tb.bottomLeft.dup({x: 'screenOriginX+2*screenSizeX/3'});
-ops.tb.left = ops.tb.topLeft.dup({height: 'screenSizeY'});
-ops.tb.right = ops.tb.topRight.dup({height: 'screenSizeY'});
+for (screen in monitor) {
+  if (screen !== 'laptop') {
+    ops[screen].full = S.op('move', {
+      screen: monitor[screen],
+      x: 'screenOriginX',
+      y: 'screenOriginY',
+      width: 'screenSizeX',
+      height: 'screenSizeY'
+    });
+    ops[screen].center = S.op('move', {
+      screen: monitor[screen],
+      x: 'screenOriginX+screenSizeX/9',
+      y: 'screenOriginY+screenSizeY/9',
+      width: 'screenSizeX-2*screenSizeX/9',
+      height: 'screenSizeY-2*screenSizeY/9'
+    });
+    ops[screen].top         = ops[screen].full.dup({height: 'screenSizeY/2'});
+    ops[screen].topLeft     = ops[screen].top.dup({width: 'screenSizeX/2'});
+    ops[screen].topRight    = ops[screen].topLeft.dup({x: 'screenOriginX+screenSizeX/2'});
+    ops[screen].bottom      = ops[screen].top.dup({y: 'screenOriginY+screenSizeY/2'});
+    ops[screen].bottomLeft  = ops[screen].bottom.dup({width: 'screenSizeX/2'});
+    ops[screen].bottomMid   = ops[screen].bottomLeft.dup({x: 'screenOriginX+screenSizeX/3'});
+    ops[screen].bottomRight = ops[screen].bottomLeft.dup({x: 'screenOriginX+2*screenSizeX/3'});
+    ops[screen].left        = ops[screen].topLeft.dup({height: 'screenSizeY'});
+    ops[screen].right       = ops[screen].topRight.dup({height: 'screenSizeY'});
+  }
+}
 
 // Common layout hashes
-var hashes = {
-  lap: {
+hashes = {
+  laptop: {
     full: {
-      operations: [ops.lap.full],
+      operations: [ops.laptop.full],
       'ignore-fail': true,
       repeat: true
     },
     main: {
-      operations: [ops.lap.main],
+      operations: [ops.laptop.main],
       'ignore-fail': true,
       repeat: true
-    },
-    adium: {
-      operations: [ops.lap.chat, ops.lap.main],
-      'ignore-fail': true,
-      'title-order': ['Contacts'],
-      'repeat-last': true
-    },
+    }
   },
-  tb: {
-    top: {
-      operations: [ops.tb.top],
-      repeat: true
-    },
-    iterm: {
-      operations: [ops.tb.full],
-      'sort-title': true,
-      repeat: true
-    }
-  }
-};
-hashes.generateBrowser = function(regex) {
-  var findBrowser = function(wo) {
-    var title = wo.title();
-    if (title !== undefined && title.match(regex)) {
-      wo.doOperation(ops.tb.topRight);
-    } else {
-      wo.doOperation(ops.lap.main);
-    }
-  };
+  generate: function(regex, yes, no) {
+    var findWindow = function(wo) {
+      var title = wo.title();
+      if (title !== undefined && title.match(regex)) {
+        wo.doOperation(yes);
+      } else {
+        wo.doOperation(no);
+      }
+    };
 
-  return {
-    operations: [findBrowser],
-    'ignore-fail': true,
-    repeat: true
+    return {
+      operations: [findWindow],
+      'ignore-fail': true,
+      repeat: true
+    }
   }
 };
+
+for (screen in monitor) {
+  if (screen !== 'laptop') {
+    hashes[screen] = {};
+    S.log('Setup hashes for ' + screen);
+
+    ['full', 'center', 'top', 'topLeft', 'topRight', 'bottom', 'bottomLeft', 'bottomRight', 'left', 'right'].forEach(function(op) {
+      S.log('  Operation: ' + screen + ':' + op);
+      hashes[screen][op] = {
+        operations: [ops[screen][op]],
+        repeat: true
+      };
+    });
+  }
+}
 
 // Layouts
-var layouts = {
-  work: S.lay('work', {
-    "Adium": hashes.lap.adium,
-    "iTerm": hashes.tb.iterm,
-    "Google Chrome": hashes.lap.main,
-    "iTunes": hashes.lap.main
+layouts = [
+  S.lay('solo', {
+    "Adium": hashes.generate(/Contacts/, ops.laptop.sliver, ops.laptop.main),
+    "iTerm": hashes.laptop.full,
+    "Google Chrome": hashes.laptop.full,
+    "Safari": hashes.laptop.full,
+    "iTunes": hashes.laptop.full
   }),
-  solo: S.lay('solo', {
-    "Adium": hashes.lap.adium,
-    "iTerm": hashes.lap.full,
-    "Google Chrome": hashes.lap.full,
-    "iTunes": hashes.lap.full
+  S.lay('pair', {
+    "Adium": hashes.generate(/Contacts/, ops.laptop.sliver, ops.laptop.main),
+    "iTerm": hashes.tbMid.full,
+    "Google Chrome": hashes.laptop.full,
+    "Safari": hashes.laptop.full,
+    "iTunes": hashes.laptop.main
+  }),
+  S.lay('trips', {
+    "Adium": hashes.generate(/Contacts/, ops.laptop.sliver, ops.laptop.main),
+    "iTerm": hashes.tbMid.full,
+    "Google Chrome": hashes.tbRight.left,
+    "Safari": hashes.tbRight.right,
+    "iTunes": hashes.tbRight.center
   })
-};
+];
 
-S.def([monitor.lap, monitor.tb], layouts.work);
-S.def([monitor.lap], layouts.solo);
+S.log('First: ' + layouts[0]);
+S.log('Second: ' + layouts[1]);
+S.log('Third: ' + layouts[2]);
 
-ops.monitor = {
-  work: S.op('layout', {name: layouts.work}),
-  solo: S.op('layout', {name: layouts.solo}),
-};
-var universalLayout = function() {
+S.def(3, layouts[2]);
+S.def(2, layouts[1]);
+S.def(1, layouts[0]);
+
+ops.monitor = [
+  S.op('layout', {name: layouts[0]}),
+  S.op('layout', {name: layouts[1]}),
+  S.op('layout', {name: layouts[2]})
+];
+universalLayout = function() {
   switch (S.screenCount()) {
+    case 3:
+      ops.monitor[2].run();
+      break;
     case 2:
-      ops.monitor.work.run();
+      ops.monitor[1].run();
       break;
     case 1:
-      ops.monitor.solo.run();
+      ops.monitor[0].run();
       break;
   }
 };
 
 S.bnda({
   'space:ctrl;alt': universalLayout,
-  'left:ctrl;shift': ops.tb.left,
-  'right:ctrl;shift': ops.tb.right,
-
-  'pad0:ctrl':  ops.lap.chat,
-  '[:ctrl':     ops.lap.chat,
-  'pad.:ctrl':  ops.lap.main,
-  ']:ctrl':     ops.lap.main,
-  'pad1:ctrl':  ops.tb.bottomLeft,
-  'pad2:ctrl':  ops.tb.bottomMid,
-  'pad3:ctrl':  ops.tb.bottomRight,
-  'pad5:ctrl':  ops.tb.full,
-  'pad7:ctrl':  ops.tb.topLeft,
-  'pad8:ctrl':  ops.tb.top,
-  'pad9:ctrl':  ops.tb.topRight,
-  'pad=:ctrl':  ops.tb.top,
-  'pad/:ctrl':  ops.tb.bottom,
+  'left:ctrl;alt': S.op('move', {
+    x: 'screenOriginX',
+    y: 'screenOriginY',
+    width: 'screenSizeX-screenSizeX/2',
+    height: 'screenSizeY'
+  }),
+  'right:ctrl;alt': S.op('move', {
+    x: 'screenOriginX+screenSizeX/2',
+    y: 'screenOriginY',
+    width: 'screenSizeX-screenSizeX/2',
+    height: 'screenSizeY'
+  }),
+  'up:ctrl;alt': S.op('move', {
+    x: 'screenOriginX',
+    y: 'screenOriginY',
+    width: 'screenSizeX',
+    height: 'screenSizeY-screenSizeY/2'
+  }),
+  'down:ctrl;alt': S.op('move', {
+    x: 'screenOriginX',
+    y: 'screenOriginY+screenSizeY/2',
+    width: 'screenSizeX',
+    height: 'screenSizeY-screenSizeY/2'
+  }),
+  'down:ctrl;alt;shift': S.op('move', {
+    x: 'screenOriginX+screenSizeX/9',
+    y: 'screenOriginY+screenSizeY/9',
+    width: 'screenSizeX-2*screenSizeX/9',
+    height: 'screenSizeY-2*screenSizeY/9'
+  }),
 
   // Throw
   'right:ctrl;alt;cmd': S.op('throw', {screen: 'right', width: 'screenSizeX', height: 'screenSizeY'}),
   'left:ctrl;alt;cmd':  S.op('throw', {screen: 'left', width: 'screenSizeX', height: 'screenSizeY'}),
-  'up:ctrl;alt;cmd':    S.op('throw', {screen: 'up', width: 'screenSizeX', height: 'screenSizeY'}),
-  'down:ctrl;alt;cmd':  S.op('throw', {screen: 'down', width: 'screenSizeX', height: 'screenSizeY'}),
 
   'esc:cmd': S.op('hint'),
   'esc:ctrl': S.op('grid')
