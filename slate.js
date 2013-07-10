@@ -112,6 +112,7 @@ layouts = [
     "iTerm": hashes.laptop.full,
     "Google Chrome": hashes.laptop.full,
     "Safari": hashes.laptop.full,
+    "Nightly": hashes.laptop.full,
     "iTunes": hashes.laptop.full
   }),
   S.lay('pair', {
@@ -119,6 +120,7 @@ layouts = [
     "iTerm": hashes.tbMid.full,
     "Google Chrome": hashes.laptop.full,
     "Safari": hashes.laptop.full,
+    "Nightly": hashes.laptop.full,
     "iTunes": hashes.laptop.main
   }),
   S.lay('trips', {
@@ -126,6 +128,7 @@ layouts = [
     "iTerm": hashes.tbMid.full,
     "Google Chrome": hashes.tbRight.left,
     "Safari": hashes.tbRight.right,
+    "Nightly": hashes.tbRight.right,
     "iTunes": hashes.tbRight.center
   })
 ];
@@ -134,9 +137,9 @@ S.log('First: ' + layouts[0]);
 S.log('Second: ' + layouts[1]);
 S.log('Third: ' + layouts[2]);
 
-S.def(3, layouts[2]);
-S.def(2, layouts[1]);
-S.def(1, layouts[0]);
+S.def(['1680x1050', '2560x1440', '2560x1440'], layouts[2]);
+S.def(['1680x1050', '2560x1440'], layouts[1]);
+S.def(['1680x1050'], layouts[0]);
 
 ops.monitor = [
   S.op('layout', {name: layouts[0]}),
@@ -188,6 +191,12 @@ S.bnda({
     y: 'screenOriginY+screenSizeY/9',
     width: 'screenSizeX-2*screenSizeX/9',
     height: 'screenSizeY-2*screenSizeY/9'
+  }),
+  'up:ctrl;alt;shift': S.op('move', {
+    x: 'screenOriginX',
+    y: 'screenOriginY',
+    width: 'screenSizeX',
+    height: 'screenSizeY'
   }),
 
   // Throw
