@@ -26,8 +26,13 @@ local host="@%{$fg_bold[cyan]%}${host_repr[$(hostname)]:-$(hostname)}%{$reset_co
 # Compacted $PWD
 local pwd="%{$fg_bold[yellow]%}%~%{$reset_color%}"
 
-PROMPT='${time} ${user}${host} ${pwd} $(git_prompt_info) 
-%# '
+# elaborate exitcode on the right when >0
+return_code_enabled="%(?..%{$fg_bold[red]%}%? ↵ %{$reset_color%})"
+return_code_disabled=
+return_code=$return_code_enabled
+
+PROMPT='${user}${host} ${pwd} ${return_code}%# '
+RPROMPT='$(git_prompt_info) ${time}'
 
 # i would prefer 1 icon that shows the "most drastic" deviation from HEAD,
 # but lets see how this works out
@@ -35,13 +40,6 @@ ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg_bold[green]%} %{$fg_bold[yellow]%}?%{$fg_bold[green]%}%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}"
-
-# elaborate exitcode on the right when >0
-return_code_enabled="%(?..%{$fg_bold[red]%}%? ↵%{$reset_color%})"
-return_code_disabled=
-return_code=$return_code_enabled
-
-RPS1='${return_code}'
 
 function accept-line-or-clear-warning () {
 	if [[ -z $BUFFER ]]; then
