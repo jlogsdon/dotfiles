@@ -33,41 +33,49 @@
     syntax on " syntax highlighting on
 " }
 
-" Vundle {
+" Bundle {
     filetype off
-    set rtp+=~/.vim/vundle/
-    call vundle#rc()
+    set rtp+=~/.vim/bundle/neobundle.vim/
+    call neobundle#rc(expand('~/.vim/bundle/'))
 
-    Bundle 'cakebaker/scss-syntax.vim'
-    Bundle 'airblade/vim-gitgutter'
-    Bundle 'Valloric/YouCompleteMe'
-    Bundle 'scrooloose/nerdtree'
-    Bundle 'tpope/vim-fugitive'
-    Bundle 'tpope/vim-dispatch'
-    Bundle 'kien/ctrlp.vim'
-    Bundle 'Raimondi/delimitMate'
-    Bundle 'docunext/closetag.vim'
-    Bundle 'scrooloose/nerdcommenter'
-    Bundle 'majutsushi/tagbar'
-    Bundle 'altercation/vim-colors-solarized.git'
-    Bundle 'vim-scripts/Better-CSS-Syntax-for-Vim'
-    Bundle 'ap/vim-css-color'
-    Bundle 'nathanaelkane/vim-indent-guides'
-    Bundle 'pangloss/vim-javascript'
-    Bundle 'tpope/vim-rails'
-    Bundle 'tpope/vim-markdown'
-    Bundle 'robbevan/Vagrantfile.vim'
-    Bundle 'Lokaltog/vim-powerline'
-    Bundle 'kchmck/vim-coffee-script'
-    Bundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
-    Bundle 'groenewege/vim-less'
-    Bundle 'myusuf3/numbers.vim'
+    NeoBundleFetch 'Shougo/neobundle.vim'
+
+    NeoBundle 'airblade/vim-gitgutter'
+    NeoBundle 'myusuf3/numbers.vim'
+    NeoBundle 'nathanaelkane/vim-indent-guides'
+    NeoBundle 'scrooloose/nerdcommenter'
+    NeoBundle 'scrooloose/nerdtree'
+    NeoBundle 'Shougo/neocomplete.vim'
+    NeoBundle 'Shougo/neocomplcache.vim'
+    NeoBundle 'Shougo/unite.vim'
+    NeoBundle 'Shougo/vimproc.vim', {'build': {'unix': 'make -f make_unix.mak'}}
+    NeoBundle 'Shougo/vimshell.vim'
+    NeoBundle 'tpope/vim-fugitive'
+    NeoBundle 'tpope/vim-dispatch'
+
+"    Bundle 'cakebaker/scss-syntax.vim'
+"    Bundle 'Raimondi/delimitMate'
+"    Bundle 'docunext/closetag.vim'
+"    Bundle 'majutsushi/tagbar'
+"    Bundle 'altercation/vim-colors-solarized.git'
+"    Bundle 'vim-scripts/Better-CSS-Syntax-for-Vim'
+"    Bundle 'ap/vim-css-color'
+"    Bundle 'nathanaelkane/vim-indent-guides'
+"    Bundle 'pangloss/vim-javascript'
+"    Bundle 'tpope/vim-rails'
+"    Bundle 'tpope/vim-markdown'
+"    Bundle 'robbevan/Vagrantfile.vim'
+"    Bundle 'Lokaltog/vim-powerline'
+"    Bundle 'kchmck/vim-coffee-script'
+"    Bundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
+"    Bundle 'groenewege/vim-less'
+"    Bundle 'myusuf3/numbers.vim'
 
     filetype plugin indent on " load filetype plugins/indent settings
 " }
 
 " General {
-    "set noautochdir " always switch to the current file directory
+    set noautochdir " always switch to the current file directory
     set backspace=indent,eol,start " make backspace a more flexible
     set nobackup " make backup files
     "set backupdir=~/.vim/backup " where to put backup files
@@ -98,7 +106,6 @@
 " }
 
 " Vim UI {
-    colorscheme Tomorrow-Night
     set cursorcolumn " highlight the current column
     set cursorline " highlight current line
     set incsearch " BUT do highlight as you type you
@@ -143,7 +150,6 @@
     set wmh=0 " Set the minimum window height to 0 (hides split panes)
     set splitbelow
     set splitright
-    set autochdir
 " }
 
 " Text Formatting/Layout {
@@ -226,6 +232,24 @@
     " Dispatch {
     let b:dispatch = 'rspec %'
     " }
+
+    let g:neocomplcache_enable_at_startup = 1
+
+    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    function! s:my_cr_function()
+      return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+    endfunction
+    " <TAB>: completion.
+    inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+    " <C-h>, <BS>: close popup and delete backword char.
+    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><C-y> neocomplete#close_popup()
+    inoremap <expr><C-e> neocomplete#cancel_popup()
+
+    nnoremap <C-p> :Unite file_rec/async<cr>
+    nnoremap <space>/ :Unite grep:.<cr>
+    nnoremap <space>s :Unite -quick-match buffer<cr>
 " }
 
 " Mappings {
@@ -233,6 +257,11 @@
     noremap <S-space> <C-b>
     noremap <space> <C-f>
     noremap <C-u> :GundoToggle<CR>
+
+    nnoremap <up> <nop>
+    nnoremap <down> <nop>
+    nnoremap <left> <nop>
+    nnoremap <right> <nop>
 
     function! WinMove(key) 
       let t:curwin = winnr()
@@ -261,9 +290,7 @@
 if has("gui_running")
     " Basics {
         colorscheme Tomorrow-Night-Bright " Looks better than the normal in GUI mode
-        set transparency=20
         set columns=180 " perfect size for me
-        set guifont=Consolas:h14 " My favorite font
         set guioptions=ce
         "              ||
         "              |+-- use simple dialogs rather than pop-ups

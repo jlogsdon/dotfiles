@@ -16,3 +16,6 @@
 [submodule "liquidprompt"]
 	path = liquidprompt
 	url = git://github.com/nojhan/liquidprompt.git
+[submodule "vim/bundle/neobundle.vim"]
+	path = vim/bundle/neobundle.vim
+	url = https://github.com/Shougo/neobundle.vim
