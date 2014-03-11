@@ -89,5 +89,6 @@ if [ -s $HOME/.tmuxifier/init.sh ]; then
   source "$HOME/.tmuxifier/init.sh"
 fi
 
-source `brew --prefix`/etc/profile.d/z.sh
-
+if [[ -f $(which brew) ]]; then
+  source `brew --prefix`/etc/profile.d/z.sh
+fi
