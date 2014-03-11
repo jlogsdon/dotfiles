@@ -31,3 +31,6 @@
     path = ~/.gitconfig.local
 [hub]
     protocol = https
+[user]
+	email = dwarf@girsbrain.org
+	name = James Logsdon
