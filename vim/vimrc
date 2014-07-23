@@ -14,6 +14,7 @@
     set nocompatible " explicitly get out of vi-compatible mode
     set exrc " don't use local version of .(g)vimrc, .exrc
     set background=dark " we plan to use a dark background
+    set t_Co=256
     set cpoptions=aABceFsmq
     "             |||||||||
     "             ||||||||+-- When joining lines, leave the cursor
@@ -32,6 +33,7 @@
     "             +-- :read updates alternative file name
     syntax on " syntax highlighting on
     autocmd BufWritePre * :%s/\s\+$//e
+    colorscheme Tomorrow-Night-Bright
 " }
 
 " Bundle {
@@ -44,7 +46,7 @@
     NeoBundle 'airblade/vim-gitgutter'
     NeoBundle 'docunext/closetag.vim'
     NeoBundle 'kchmck/vim-coffee-script'
-    NeoBundle 'Lokaltog/vim-powerline'
+    NeoBundle 'bling/vim-airline'
     NeoBundle 'majutsushi/tagbar'
     NeoBundle 'myusuf3/numbers.vim'
     NeoBundle 'nathanaelkane/vim-indent-guides'
@@ -59,16 +61,7 @@
     NeoBundle 'Shougo/vimshell.vim'
     NeoBundle 'tpope/vim-fugitive'
     NeoBundle 'tpope/vim-dispatch'
-
-"    Bundle 'cakebaker/scss-syntax.vim'
-"    Bundle 'altercation/vim-colors-solarized.git'
-"    Bundle 'vim-scripts/Better-CSS-Syntax-for-Vim'
-"    Bundle 'ap/vim-css-color'
-"    Bundle 'tpope/vim-rails'
-"    Bundle 'tpope/vim-markdown'
-"    Bundle 'robbevan/Vagrantfile.vim'
-"    Bundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
-"    Bundle 'groenewege/vim-less'
+    NeoBundle 'derekwyatt/vim-scala'
 
     filetype plugin indent on " load filetype plugins/indent settings
 " }
@@ -219,9 +212,7 @@
     " }
     " }
 
-    " Powerline {
-    let g:Powerline_symbols = 'fancy'
-    " }
+    let g:airline_powerline_fonts = 1
 
     " NERDTree {
     autocmd vimenter * if !argc() | NERDTree | endif
