@@ -62,6 +62,7 @@
     NeoBundle 'tpope/vim-fugitive'
     NeoBundle 'tpope/vim-dispatch'
     NeoBundle 'derekwyatt/vim-scala'
+    NeoBundle 'mustache/vim-mustache-handlebars'
 
     filetype plugin indent on " load filetype plugins/indent settings
 " }
