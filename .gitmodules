@@ -7,12 +7,12 @@
 [submodule "vendor/base16-shell"]
 	path = vendor/base16-shell
 	url = git://github.com/chriskempson/base16-shell.git
-[submodule "zsh/plugins/zsh-syntax-highlighting"]
-	path = zsh/plugins/zsh-syntax-highlighting
-	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "liquidprompt"]
 	path = liquidprompt
 	url = git://github.com/nojhan/liquidprompt.git
 [submodule "vim/bundle/neobundle.vim"]
 	path = vim/bundle/neobundle.vim
 	url = https://github.com/Shougo/neobundle.vim
+[submodule "vendor/prezto"]
+	path = vendor/prezto
+	url = https://github.com/sorin-ionescu/prezto.git

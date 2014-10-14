@@ -1,12 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 #
 # Links files in this directory to the current users home directory.
 
 real_path () {
-    _=`pwd`
+    local cwd=`pwd`
     [ -d $DIR ] && DIR=$1
     [ -f $DIR ] && DIR=`dirname $1`
-    cd $DIR && echo `pwd` && cd $_
+    cd $DIR && echo `pwd` && cd $cwd
 }
 
 SCRIPT_DIR=$(real_path $0)
@@ -29,15 +29,19 @@ function link() {
     ln -snf $SRC $DST
 }
 
-link vendor/oh-my-zsh .oh-my-zsh
+link vendor/prezto .zprezto
+link vendor/prezto/runcoms/zlogin .zlogin
+link vendor/prezto/runcoms/zlogout .zlogout
+link vendor/prezto/runcoms/zshenv .zshenv
 link vendor/tmux-powerline .tmux-powerline
 link vendor/base16-shell .base16-shell
 
+link zsh/zpresztorc .zpreztorc
+link zsh/zprofile .zprofile
+link zsh/zshrc .zshrc
+
 link vim/vimrc .vimrc
 link vim
-
-link zsh/zshrc .zshrc
-link zsh
 
 link git/gitconfig .gitconfig
 link git/gitignore .gitignore
