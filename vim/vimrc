@@ -63,6 +63,7 @@
     NeoBundle 'tpope/vim-dispatch'
     NeoBundle 'derekwyatt/vim-scala'
     NeoBundle 'mustache/vim-mustache-handlebars'
+    NeoBundle 'godlygeek/tabular'
 
     filetype plugin indent on " load filetype plugins/indent settings
 " }
