@@ -64,6 +64,10 @@
     NeoBundle 'derekwyatt/vim-scala'
     NeoBundle 'mustache/vim-mustache-handlebars'
     NeoBundle 'godlygeek/tabular'
+    NeoBundle 'elixir-lang/vim-elixir'
+    NeoBundle 'mtscout6/vim-cjsx'
+    NeoBundle 'rking/ag.vim'
+    NeoBundle 'vim-ruby/vim-ruby'
 
     filetype plugin indent on " load filetype plugins/indent settings
 " }

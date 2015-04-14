@@ -16,3 +16,6 @@
 [submodule "vendor/prezto"]
 	path = vendor/prezto
 	url = https://github.com/sorin-ionescu/prezto.git
+[submodule "tmux/powerline"]
+	path = tmux/powerline
+	url = git://github.com/powerline/powerline
