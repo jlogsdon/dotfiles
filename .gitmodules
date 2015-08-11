@@ -19,3 +19,6 @@
 [submodule "tmux/powerline"]
 	path = tmux/powerline
 	url = git://github.com/powerline/powerline
+[submodule "vendor/k"]
+	path = vendor/k
+	url = git@github.com:rimraf/k.git
