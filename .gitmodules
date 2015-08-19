@@ -16,9 +16,9 @@
 [submodule "vendor/prezto"]
 	path = vendor/prezto
 	url = https://github.com/sorin-ionescu/prezto.git
-[submodule "tmux/powerline"]
-	path = tmux/powerline
-	url = git://github.com/powerline/powerline
 [submodule "vendor/k"]
 	path = vendor/k
 	url = git@github.com:rimraf/k.git
+[submodule "vendor/tpm"]
+	path = vendor/tpm
+	url = https://github.com/tmux-plugins/tpm

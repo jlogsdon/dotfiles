@@ -1,2 +1,5 @@
 vim/bundle/
 vim/swap/
+tmux/resurrect/
+!tmux/plugins/tpm/
+tmux/plugins/
