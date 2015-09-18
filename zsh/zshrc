@@ -60,7 +60,7 @@ fi
 # basic prompt on the left
 PROMPT='%{$fg[red]%}%m%{$fg[green]%}:%{$fg[cyan]%}%~% %(?.%{$fg[green]%}.%{$fg[red]%})%B$%b '
 
-source $HOME/Library/dotfiles/vendor/k/k.sh
+source $HOME/.k/k.sh
 
 [[ -f $HOME/.zsh_local ]] && source $HOME/.zsh_local
 [[ -f $HOME/.aliases ]] && source $HOME/.aliases
