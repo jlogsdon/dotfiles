@@ -76,6 +76,8 @@
     NeoBundle 'kien/rainbow_parentheses.vim'
     NeoBundle 'guns/vim-clojure-highlight'
     NeoBundle 'tpope/vim-surround'
+    NeoBundle 'tmux-plugins/vim-tmux'
+    NeoBundle 'tmux-plugins/vim-tmux-focus-events'
 
     call neobundle#end()
     filetype plugin indent on " load filetype plugins/indent settings
