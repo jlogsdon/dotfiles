@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+
+ssh -o PermitLocalCommand=yes -o LocalCommand='gtar c -C$HOME/Library/server-dotfiles .zshrc .vimrc .tmux.conf .vim | ssh -o PermitLocalCommand=no %n "tar x --keep-newer-files -C/home/jlogsdon"' $*

@@ -1,0 +1,74 @@
+#!/bin/bash
+
+if [ ! `which jq` ]; then
+  echo "jq is required to use this script. Visit https://stedolan.github.io/jq/ and install the sucker."
+  exit 1
+fi
+
+usage() { echo "Usage: tcssh <group> [panes]" 1>&2; }
+
+group=$1
+if [ -z $group ]; then
+  echo "Error: no AWS group was specified."
+  usage
+  exit 1
+fi
+
+response=$(aws ec2 describe-instances --filter Name=group-name,Values=$group)
+instances=($(echo $response | jq -c -M -r '.Reservations[].Instances[].PublicDnsName'))
+count=${#instances[@]}
+panes=${2:-$count}
+windows=$(($count / $panes))
+
+if [ $count -eq 0 ]; then
+  echo "No instances found for the group ${group}"
+  exit 2
+fi
+
+if [ $panes -gt 18 ]; then
+  echo "You are creating ${panes} panes, which can be hard to manage. You may specify a maximum number of panes per window as a second argument"
+  read -p "Do you wish to continue? " -n 1 -r answer
+  echo # For a new line
+  if [[ $answer =~ ^[Nn]$ ]]; then
+    echo "Aborting!"
+    exit 0
+  fi
+else
+  echo "Attaching to ${count} instances"
+fi
+
+let i=0
+
+echo $i
+echo $count
+
+while [ $i -lt $count ]; do
+  instance=${instances[$i]}
+  let window=$(($i / $panes))
+  let pane=$(($i % $panes))
+  cmd="ssh `whoami`@${instance}"
+
+  if [ $i -eq 0 ]; then
+    tmux new-session -s tcssh -n tcssh -d "$cmd"
+  else
+    # We need to create a new window for pane 0
+    if [ $pane -eq 0 ]; then
+      tmux new-window -n tcssh "$cmd"
+    else
+      tmux split-window "$cmd"
+      tmux select-layout -t ${window} tiled
+    fi
+  fi
+
+  ((i++))
+done
+
+# We can't easily sync all panes across all windows, but at the very least we can sync panes in each window.
+let i=0
+while [ $i -le $windows ]; do
+  tmux set-window-option -t $i synchronize-panes on
+  ((i++))
+done
+
+tmux select-window -t 0
+tmux -2 attach-session -t tcssh

@@ -1,0 +1,32 @@
+#!/usr/bin/env zsh
+
+main() {
+  local project=$1
+  local new_session=0
+
+  if [ -z $project ]; then
+    echo "Usage: open-project <name>"
+    exit 1
+  fi
+
+  tmux has-session 2> /dev/null
+  if [ $? -eq 1 ]; then
+    new_session=1
+    tmux new-session -d -n ${project}:vim
+  else
+    tmux new-window -n ${project}:vim
+  fi
+
+  tmux send-keys "z ${project}; nvim" Enter
+  tmux new-window -n ${project}:shell
+  tmux send-keys "z ${project}" Enter
+  tmux split-window -h
+  tmux select-layout '55cd,208x54,0,0{120x54,0,0,85,87x54,121,0,86}' > /dev/null
+  tmux send-keys "z ${project}" Enter
+
+  if [ $new_session -eq 1 ]; then
+    tmux attach
+  fi
+}
+
+main $@
