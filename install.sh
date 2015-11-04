@@ -50,6 +50,7 @@ link tmux
 
 link osx
 link inputrc
+link mjolnir
 
 # Handle scripts
 if [[ `uname` == "Darwin" ]]; then
