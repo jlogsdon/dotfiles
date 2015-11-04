@@ -33,8 +33,6 @@ link vendor/prezto .zprezto
 link vendor/prezto/runcoms/zlogin .zlogin
 link vendor/prezto/runcoms/zlogout .zlogout
 link vendor/prezto/runcoms/zshenv .zshenv
-link vendor/tmux-powerline .tmux-powerline
-link vendor/base16-shell .base16-shell
 link vendor/k .k
 
 link zsh/zpresztorc .zpreztorc
