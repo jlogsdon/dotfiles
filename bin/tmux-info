@@ -1,9 +1,0 @@
-#!/bin/zsh
-
-# For Darwin (OSX)
-if which sysctl &> /dev/null; then
-    sysctl vm.loadavg | cut -c15-28
-# Should work on *NIX
-elif which tmux-mem-cpu-load &> /dev/null; then
-    tmux-mem-cpu-load $1
-fi
