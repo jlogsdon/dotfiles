@@ -3,10 +3,10 @@
 # Links files in this directory to the current users home directory.
 
 real_path () {
-    local cwd=`pwd`
-    [ -d $DIR ] && DIR=$1
-    [ -f $DIR ] && DIR=`dirname $1`
-    cd $DIR && echo `pwd` && cd $cwd
+  local cwd=`pwd`
+  [ -d $DIR ] && DIR=$1
+  [ -f $DIR ] && DIR=`dirname $1`
+  cd $DIR && echo `pwd` && cd $cwd
 }
 
 SCRIPT_DIR=$(real_path $0)
@@ -15,18 +15,18 @@ FORCE=0
 PREFIX=$HOME
 
 while getopts "p:" flag; do
-    case "$flag" in
-        p) PREFIX=$OPTARG ;;
-    esac
+  case "$flag" in
+    p) PREFIX=$OPTARG ;;
+  esac
 done
 
 PREFIX=${PREFIX%/}
 
 function link() {
-    [ -z $2 ] && DST=.$1 || DST=$2
-    DST=${PREFIX}/$DST
-    SRC=${SCRIPT_DIR}/$1
-    ln -snf $SRC $DST
+  [ -z $2 ] && DST=.$1 || DST=$2
+  DST=${PREFIX}/$DST
+  SRC=${SCRIPT_DIR}/$1
+  ln -snf $SRC $DST
 }
 
 link vendor/prezto .zprezto
@@ -48,15 +48,16 @@ link git/gitignore .gitignore
 link tmux/tmux.conf .tmux.conf
 link tmux
 
-link osx
 link inputrc
-link mjolnir
 
 # Handle scripts
 if [[ `uname` == "Darwin" ]]; then
-    BIN_PATH=Scripts
+  link osx
+  link mjolnir
+
+  BIN_PATH=Scripts
 else
-    BIN_PATH=bin
+  BIN_PATH=bin
 fi
 
 [ -d $PREFIX/$BIN_PATH ] || mkdir $PREFIX/$BIN_PATH
