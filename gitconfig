@@ -1,0 +1,23 @@
+[core]
+	excludesfile = ~/.gitignore
+	autocrlf = input
+[color]
+	ui = auto
+	interactive = auto
+[push]
+	default = simple
+[pull]
+	default = rebase
+[user]
+	email = dwarf@girsbrain.org
+	name = James Logsdon
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+	staged = diff --cached
+	changes = diff --name-status -r
+	oneline = log --pretty=oneline
+	llog = log --date=local
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	empty-branch = !sh -c 'git symbolic-ref HEAD refs/heads/$1 && rm .git/index && git clean -fdx' -

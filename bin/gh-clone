@@ -1,0 +1,46 @@
+#!/usr/bin/env sh
+# Clone a repository from github into `~/Code/{user}.github.com/{repo}`.
+# If the `-p` flag is provided it will be cloned using the privileged URL.
+
+
+main() {
+  local private=0
+  local OPTIND
+
+  usage() { echo "gco [-p] <user> <repo>" 1>&2; exit "$1" }
+
+  while getopts "p" o; do
+    case "${o}" in
+      p) private=1;;
+    esac
+  done
+  shift $((OPTIND-1))
+
+  local user="$1"
+  local repo="$2"
+
+  [ -z "$user" ] && usage 1
+  [ -z "$repo" ] && usage 2
+
+  local domain="${user}.github.com"
+  local base="${HOME}/Code/${domain}"
+  local path="${base}/${repo}"
+  local url
+
+  [ -d "$base" ] || mkdir -p "$base"
+
+  if [ -d "$path" ]; then
+    echo "${user}/${repo} has already been checked out!"
+  else
+    if [ "$private" -eq 0 ]; then
+      url="git://github.com/${user}/${repo}.git"
+    else
+      url="git@github.com:${user}/${repo}.git"
+    fi
+
+    echo "=> ${url}"
+    git clone "$url" "$path"
+  fi
+}
+
+main "$@"
