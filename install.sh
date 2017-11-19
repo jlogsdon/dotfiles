@@ -44,6 +44,7 @@ checkout .local/tmux/plugins/tpm https://github.com/tmux-plugins/tpm
 
 link tmux.conf
 link vendor/prezto .zprezto
+link zsh
 link zalias
 link zshrc
 link zlogin
