@@ -46,12 +46,12 @@ link tmux.conf
 link vendor/prezto .zprezto
 link zsh
 link zalias
+link zshenv
 link zshrc
 link zlogin
 link zlogout
 link zpreztorc
 link zprofile
-link zenv
 
 mkdir -p "$PREFIX/.config"
 link nvim .config/nvim

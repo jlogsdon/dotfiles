@@ -14,23 +14,6 @@ fi
 
 source $HOME/.zalias
 
-path=(
-  ./bin
-  $HOME/bin
-  $HOME/.local/rbenv/{shims,bin}
-  /usr/local/{bin,sbin}
-  /usr/{bin,sbin}
-)
-
-export EDITOR='nvim'
-export VISUAL='nvim'
-export PAGER='less'
-export LESS='-F -g -i -M -R -S -w -X -z-4'
-
-if [[ -z "$LANG" ]]; then
-  export LANG='en_US.UTF-8'
-fi
-
 #
 # Language Runtime Managers
 #
@@ -60,3 +43,5 @@ rbenv() {
 # nvm
 export NVM_DIR="$HOME/.local/nvm"
 source "$NVM_DIR/nvm.sh"
+
+eval "$(ssh-agent -s)"
