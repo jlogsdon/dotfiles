@@ -24,13 +24,31 @@ link() {
 	SRC=${SCRIPT_DIR}/$1
 	ln -snf "$SRC" "$DST"
 }
+checkout() {
+	DST="$PREFIX/$1"
+	SRC="$2"
 
+	[ -d "$DST" ] || git clone "$SRC" "$DST"
+}
+
+link gemrc
 link gitconfig
 link gitignore
 link inputrc
 
-link zshrc
+mkdir -p "$PREFIX/.local"
+checkout .local/rbenv https://github.com/rbenv/rbenv
+checkout .local/rbenv/plugins/ruby-build https://github.com/rbenv/ruby-build
+checkout .local/nvm https://github.com/creationix/nvm.git
+
 link vendor/prezto .zprezto
+link zalias
+link zshrc
+link zlogin
+link zlogout
+link zpreztorc
+link zprofile
+link zenv
 
 mkdir -p "$PREFIX/.config"
 link nvim .config/nvim

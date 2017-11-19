@@ -1,0 +1,6 @@
+alias vim=nvim
+alias vimdiff="nvim -d"
+alias be="bundle exec"
+alias fob="foreman run bundle exec"
+
+# vim:ft=zsh:
