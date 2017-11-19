@@ -39,8 +39,10 @@ link inputrc
 mkdir -p "$PREFIX/.local"
 checkout .local/rbenv https://github.com/rbenv/rbenv
 checkout .local/rbenv/plugins/ruby-build https://github.com/rbenv/ruby-build
-checkout .local/nvm https://github.com/creationix/nvm.git
+checkout .local/nvm https://github.com/creationix/nvm
+checkout .local/tmux/plugins/tpm https://github.com/tmux-plugins/tpm
 
+link tmux.conf
 link vendor/prezto .zprezto
 link zalias
 link zshrc
